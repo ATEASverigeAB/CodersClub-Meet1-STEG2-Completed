@@ -139,7 +139,7 @@ function getMeetings(user,fn){
     var retVal = '{"result":"No Data"}'
 
     var dataSet = []
-    var request = new Request("SELECT * FROM [dbo].[meetings] WHERE userid = '"+user.id+"'", function (err, rowCount) {
+    var request = new Request("SELECT * FROM [dbo].[meetings] WHERE userid LIKE '"+user.id+"'", function (err, rowCount) {
 
             if (err) {
                     console.log("Request error executeStatement -- " + err);
@@ -309,7 +309,10 @@ app.get('/details/:id', ensureAuthenticated, (req, res) => {
 
 app.get('/vote/:id',(req, res) => {
     //render vote.ejs for specific meeting
-    getMeetings(req.user,(data) => {
+    var user = {
+        id:'%'
+    };
+    getMeetings(user,(data) => {
         var meeting = data.filter((meeting) => {
             return meeting.id == req.params.id
         })[0]
@@ -323,7 +326,10 @@ app.get('/vote/:id',(req, res) => {
 });
 
 app.post('/doVote/:id',(req, res) => {
-    getMeetings(req.user,(data) => {
+    var user = {
+        id:'%'
+    };
+    getMeetings(user,(data) => {
         data.filter((meeting) => {
             if(meeting.id == req.params.id){
                 if(meeting.votes === ''){
