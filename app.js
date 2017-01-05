@@ -69,7 +69,7 @@ var findByEmail = function(email, fn) {
 //   credentials (in this case, an OpenID identifier), and invoke a callback
 //   with a user object.
 passport.use(new OIDCStrategy({
-    redirectUrl: config.creds.returnURL,
+    callbackURL: config.creds.returnURL,
     clientID: config.creds.clientID,
     identityMetadata: config.creds.identityMetadata,
     skipUserProfile: config.creds.skipUserProfile,
